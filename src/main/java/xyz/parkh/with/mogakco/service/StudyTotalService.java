@@ -21,7 +21,6 @@ public class StudyTotalService {
 
     public List<StudyTotal> getStudyTotalStartToEnd(LocalDate start, LocalDate end) {
         List<StudyTotal> allByDateBetween = studyTotalRepository.findAllByDateBetween(start, end);
-        System.out.println(allByDateBetween);
         return allByDateBetween;
     }
 
