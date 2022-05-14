@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>공부 기록</title>
+</head>
+<body>
+<h1 th:text="${userName}"></h1>
+<p>오늘 공부 시간 : <span th:text="${todayStudyTime}"></span> 분</p>
+
+<br>
+<div>
+    <h2>이번주</h2>
+    <p th:each="studyTotal : ${weekList}">
+        <span th:text="${studyTotal.date}"></span>/ <span th:text="${studyTotal.studyTime}"></span>분
+    </p>
+</div>
+
+<br>
+<h2>공부 기록</h2>
+<table>
+    <tbody>
+    <tr th:each="studyTotal : ${allList}">
+        <td><span th:text="${studyTotal.date}"></span></td>
+        <td> / <span th:text="${studyTotal.studyTime}"></span>분</td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>공부 기록</title>
+</head>
+<body>
+<table>
+    <thead>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${userList}">
+        <td><a th:href="@{/{userNum}/(userNum=${user.userNum})}"><span th:text="${user.userName}"/></a></td>
+    </tr>
+</table>
+</tbody>
+</body>
+</script>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>공부 기록</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>일시</th>
+        <th>시간</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="studyTotal : ${studyTotalList}">
+        <td><span th:text="${studyTotal.user.userName}"></span></td>
+        <td><span th:text="${studyTotal.date}"></span></td>
+        <td><span th:text="${studyTotal.studyTime}"></span></td>
+    </tr>
+</table>
+</tbody>
+</body>
+</script>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{userList}</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>이름</th>
+        <th>목표 시간</th>
+        <th>목표 횟수</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${userList}">
+        <td><span th:text="${user.userName}"></span></td>
+        <td><span th:text="${user.wantTime}"></span></td>
+        <td><span th:text="${user.wantCnt}"></span></td>
+    </tr>
+</table>
+</tbody>
+</body>
+</script>
+</html>
