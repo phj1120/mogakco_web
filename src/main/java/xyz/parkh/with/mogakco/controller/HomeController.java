@@ -14,6 +14,7 @@ import xyz.parkh.with.mogakco.service.UserService;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Controller
@@ -39,17 +40,20 @@ public class HomeController {
         // 그러면 호출을 여러번 하는데 괜찮나?
 
         List<StudyTotal> allList = studyTotalService.getStudyTotalByUserNum(userNum);
-        String userName = allList.get(0).getUser().getUserName();
+        Collections.reverse(allList);
 
         LocalDate today = LocalDate.now();
-
-        String todayStudyTime;
-        StudyTotal lastStudyTotal = allList.get(allList.size() - 1);
-        if (today.equals(lastStudyTotal.getDate())) {
-            todayStudyTime = lastStudyTotal.getStudyTime();
-        } else {
-            todayStudyTime = "None";
+        String userName = null;
+        Integer todayStudyTotal = null;
+        Integer wantStudyTotal = 300;
+        if (allList.size() != 0) {
+            userName = allList.get(0).getUser().getUserName();
+            StudyTotal lastStudyTotal = allList.get(0);
+            if (lastStudyTotal.getDate().isEqual(LocalDate.now())) {
+                todayStudyTotal = Integer.parseInt(lastStudyTotal.getStudyTime());
+            }
         }
+
 
         LocalDate startOfWeek = today.with(DayOfWeek.MONDAY);
         LocalDate endOfWeek = today.with(DayOfWeek.SUNDAY);
@@ -63,7 +67,8 @@ public class HomeController {
         }
 
         model.addAttribute("userName", userName);
-        model.addAttribute("todayStudyTime", todayStudyTime);
+        model.addAttribute("todayStudyTotal", todayStudyTotal);
+        model.addAttribute("wantStudyTotal", wantStudyTotal);
         model.addAttribute("weekList", weekList);
         model.addAttribute("allList", allList);
         return "userNum";
@@ -75,7 +80,6 @@ public class HomeController {
         model.addAttribute("studyTotalList", studyTotalByUserNum);
         return "userNum/today";
     }
-
 
 
 }

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<link rel="stylesheet" href="https://unpkg.com/mvp.css">
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -6,26 +7,46 @@
 </head>
 <body>
 <h1 th:text="${userName}"></h1>
-<p>오늘 공부 시간 : <span th:text="${todayStudyTime}"></span> 분</p>
 
-<br>
-<div>
+<div th:if="${todayStudyTotal != null}">
+    <h2>오늘 공부 시간</h2>
+    <p th:class="${todayStudyTotal<=wantStudyTotal}? 'low-studyTime'"
+       th:text="${todayStudyTotal>=60}? ${todayStudyTotal / 60}+' 시간 '+${todayStudyTotal % 60}+' 분': ${todayStudyTotal}+' 분'"></p>
+</div>
+
+<div th:if="${weekList != null}">
     <h2>이번주</h2>
     <p th:each="studyTotal : ${weekList}">
         <span th:text="${studyTotal.date}"></span>/ <span th:text="${studyTotal.studyTime}"></span>분
     </p>
 </div>
 
-<br>
-<h2>공부 기록</h2>
-<table>
-    <tbody>
-    <tr th:each="studyTotal : ${allList}">
-        <td><span th:text="${studyTotal.date}"></span></td>
-        <td> / <span th:text="${studyTotal.studyTime}"></span>분</td>
-    </tr>
-    </tbody>
-</table>
+<div th:if="${allList != null}">
+    <h2>공부 기록</h2>
+    <table>
+        <tbody>
+        <tr th:each="studyTotal : ${allList}">
+            <td><span th:text="${studyTotal.date}"></span></td>
+            <td> / <span th:text="${studyTotal.studyTime}"></span>분</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
 </body>
 </html>
+
+<script>
+    fetch('with.parkh.xyz:8080/doing/api/auth/signIn?userId=park&password=park')
+        .then((response) => {
+            return response.json()
+        })
+</script>
+
+<style>
+    .low-studyTime {
+        color: #ff0000;
+        font-weight: bold;
+        font-size: medium;
+    }
+</style>
