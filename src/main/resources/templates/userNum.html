@@ -25,29 +25,61 @@
 
 <div>
     <h2>공부 기록</h2>
+    <p id="studyDayCnt">bye</p>
     <canvas id="totalHistory" style="height:30vh; width:50vw"></canvas>
 </div>
-
-<script>
-
-</script>
-
-
-
 </body>
 </html>
 
 <script th:inline="javascript">
-    allList = [[${allList}]]
-    dates = []
-    studyTimes = []
+    let allList = [[${allList}]]
+    let dates = []
+    let studyTimes = []
+    let studyTimeSum = 0
     allList.forEach(list => {
-        dateArr = list.date.split('-')
+        let dateArr = list.date.split('-')
         date = dateArr[1].concat('-', dateArr[2]) // 년 제거하기 위해
-
         dates.push(date)
         studyTimes.push(list.studyTime)
+
+        studyTimeSum += Number(list.studyTime)
     });
+
+    let oldestDate = new Date(allList[0].date)
+    let now = new Date(getToday())
+    let totalDayCnt = getDifferenceInDays(oldestDate, now)
+    let studyDayCnt = allList.length.toString()
+    let studyTimeAvg = toHoursAndMinutes(Math.ceil(studyTimeSum / Number(studyDayCnt)))
+
+    let studyCntStr = `지난 ${totalDayCnt} 일 중 총 ${studyDayCnt} 일 동안 <br/ > 평균 ${studyTimeAvg} 씩 공부`
+
+    document.getElementById("studyDayCnt").innerHTML = studyCntStr;
+
+    function toHoursAndMinutes(totalMinutes) {
+        const minutes = totalMinutes % 60;
+        const hours = Math.floor(totalMinutes / 60);
+
+        return `${padTo2Digits(hours)}시간 ${padTo2Digits(minutes)} 분`;
+    }
+
+    function padTo2Digits(num) {
+        return num.toString().padStart(2, '0');
+    }
+
+    function getDifferenceInDays(date1, date2) {
+        const diffInMs = Math.abs(date2 - date1);
+        return diffInMs / (1000 * 60 * 60 * 24) + 1;
+    }
+
+    function getToday(){
+        const date = new Date();
+        const year = date.getFullYear();
+        const month = ("0" + (1 + date.getMonth())).slice(-2);
+        const day = ("0" + date.getDate()).slice(-2);
+
+        return `${year}-${month}-${day}`;
+    }
+
 
     const ctx = document.getElementById('totalHistory').getContext('2d');
     const totalHistoryChart = new Chart(ctx, {
