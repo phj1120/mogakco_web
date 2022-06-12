@@ -40,20 +40,21 @@ public class HomeController {
         // 그러면 호출을 여러번 하는데 괜찮나?
 
         List<StudyTotal> allList = studyTotalService.getStudyTotalByUserNum(userNum);
-        Collections.reverse(allList);
+//        Collections.reverse(allList);
 
         LocalDate today = LocalDate.now();
         String userName = null;
         Integer todayStudyTotal = null;
         Integer wantStudyTotal = 300;
+
+        // 총 목록에서
         if (allList.size() != 0) {
             userName = allList.get(0).getUser().getUserName();
-            StudyTotal lastStudyTotal = allList.get(0);
+            StudyTotal lastStudyTotal = allList.get(allList.size() - 1);
             if (lastStudyTotal.getDate().isEqual(LocalDate.now())) {
                 todayStudyTotal = Integer.parseInt(lastStudyTotal.getStudyTime());
             }
         }
-
 
         LocalDate startOfWeek = today.with(DayOfWeek.MONDAY);
         LocalDate endOfWeek = today.with(DayOfWeek.SUNDAY);
