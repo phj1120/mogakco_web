@@ -6,4 +6,6 @@ import xyz.parkh.with.mogakco.entity.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
+
+    User findByUserNum(String userId);
 }

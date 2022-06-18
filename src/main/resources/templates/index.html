@@ -1,19 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.8.0/dist/chart.min.js"></script>
+
 <head>
     <meta charset="UTF-8">
     <title>공부 기록</title>
 </head>
 <body>
-<table>
-    <thead>
-    </thead>
-    <tbody>
-    <tr th:each="user : ${userList}">
-        <td><a th:href="@{/{userNum}/(userNum=${user.userNum})}"><span th:text="${user.userName}"/></a></td>
-    </tr>
-</table>
-</tbody>
+<div>
+    <br>
+</div>
+<div style="width: 80%; display: flex; margin: auto">
+    <div style="float:left; width:20%">
+        <div style="margin: auto;  vertical-align: middle;">
+            <table>
+                <thead>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${allUserWeeklyStudyTimeList}">
+                    <td><a th:href="@{/users/{userNum}/(userNum=${user.userNum})}"><span th:text="${user.userName}"/></a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div style="float:left; width:80%">
+        <div>
+            <p id="studyDayCnt"></p>
+            <canvas id="totalHistory" style="height:30vh; width:50vw"></canvas>
+        </div>
+    </div>
+</div>
 </body>
+
+<script th:inline="javascript">
+    const datas = [[${allUserWeeklyStudyTimeList}]];
+    let datasets = [];
+
+    datas.forEach(data => {
+        let color = '#' + Math.round(Math.random() * 0xffffff).toString(16);
+        let dataset = {
+            label: '',
+            data: '',
+            backgroundColor: [
+                color,
+            ],
+            borderColor: [
+                color,
+
+            ],
+            borderWidth: 1,
+            hidden: true
+        }
+        dataset.label = data.userName
+        dataset.data = data.studyTimeMap
+        datasets.push(dataset)
+    })
+
+    const ctx = document.getElementById('totalHistory').getContext('2d');
+    const totalHistoryChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                datasets: datasets,
+            },
+            options: {
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: '일 자'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: '분',
+                            beginAtZero: true
+                        },
+                        ticks: {
+                            stepSize: 60,
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {}
+                }
+            }
+        }
+    );
 </script>
+<style>
+    a {
+        text-decoration: none;
+        color: black;
+    }
+</style>
 </html>

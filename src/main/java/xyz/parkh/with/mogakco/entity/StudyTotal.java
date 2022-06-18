@@ -10,7 +10,7 @@ import java.time.LocalDate;
 public class StudyTotal {
     @Id
     String no;
-    String studyTime;
+    Integer studyTime;
     LocalDate date;
     String todaySuccess;
     String weekSuccessCnt;

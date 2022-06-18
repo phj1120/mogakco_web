@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface StudyTotalRepository extends JpaRepository<StudyTotal, String> {
-    List<StudyTotal> findAllByDateBetween(LocalDate start, LocalDate end);
-    List<StudyTotal> findAllByDate(LocalDate date);
+    List<StudyTotal> findAllByUserUserNumAndDateBetween(String userNum, LocalDate start, LocalDate end);
+
     List<StudyTotal> findAllByUserUserNum(String userNum);
 }
