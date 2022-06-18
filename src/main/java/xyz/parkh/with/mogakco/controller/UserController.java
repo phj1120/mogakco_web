@@ -1,6 +1,7 @@
 package xyz.parkh.with.mogakco.controller;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
+@Slf4j
 public class UserController {
 
     private final StudyTotalService studyTotalService;
@@ -25,6 +27,8 @@ public class UserController {
 
         model.addAttribute("userNameList", userNameList);
         model.addAttribute("allUserWeeklyStudyTimeList", allUserWeeklyStudyTimeList);
+
+        log.info("/users");
         return "index";
     }
 
@@ -45,6 +49,8 @@ public class UserController {
         model.addAttribute("wantStudyTotal", wantStudyTotal);
         model.addAttribute("studyTimeMapAll", studyTimeMapAll);
         model.addAttribute("studyTimeMapWeek", studyTimeMapWeek);
+
+        log.info("/users/{userNum} : "+userName);
         return "userNum";
     }
 }

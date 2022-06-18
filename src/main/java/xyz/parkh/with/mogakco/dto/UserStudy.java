@@ -56,6 +56,11 @@ public class UserStudy {
                 StudyTotal studyTotal = findStudyTotal.get();
                 studyTime = studyTotal.getStudyTime();
             }
+
+            if (LocalDate.now().isBefore(day)){
+                studyTime = null;
+            }
+
             addStudyTimeMap(studyDate, studyTime);
         }
     }

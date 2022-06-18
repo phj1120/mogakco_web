@@ -8,28 +8,32 @@
     <title>공부 기록</title>
 </head>
 <body>
-<h1 th:text="${userName}"></h1>
+<br>
+<div style="width: 80%; margin: auto;">
+    <h1 th:text="${userName}"></h1>
 
-<div th:if="${todayStudyTotal != null}">
-    <h2>오늘 공부 시간</h2>
-    <p th:class="${todayStudyTotal<=wantStudyTotal}? 'low-studyTime'"
-       th:text="${todayStudyTotal>=60}? ${todayStudyTotal / 60}+' 시간 '+${todayStudyTotal % 60}+' 분': ${todayStudyTotal}+' 분'"></p>
-</div>
+    <div th:if="${todayStudyTotal != null}">
+        <h2>오늘 공부 시간</h2>
+        <p th:class="${todayStudyTotal<=wantStudyTotal}? 'low-studyTime'"
+           th:text="${todayStudyTotal>=60}? ${todayStudyTotal / 60}+' 시간 '+${todayStudyTotal % 60}+' 분': ${todayStudyTotal}+' 분'"></p>
+    </div>
 
-<div th:if="${studyTimeMapWeek != null}">
-    <h2>이번주</h2>
-    <div th:each="studyTotal : ${studyTimeMapWeek}">
-        <p th:if="${studyTotal.value} != 0">
-            <span th:text="${studyTotal.key}"></span> : <span th:text="${studyTotal.value}"></span>분
-        </p>
+    <div th:if="${studyTimeMapWeek != null}">
+        <h2>이번주</h2>
+        <div th:each="studyTotal : ${studyTimeMapWeek}">
+            <p th:if="${studyTotal.value} != 0 and ${not #strings.isEmpty(studyTotal.value)}">
+                <span th:text="${studyTotal.key}"></span> : <span th:text="${studyTotal.value}"></span>분
+            </p>
+        </div>
+    </div>
+
+    <div>
+        <h2>공부 기록</h2>
+        <p id="studyDayCnt"></p>
+        <canvas id="totalHistory" style="height:30vh; width:50vw"></canvas>
     </div>
 </div>
 
-<div>
-    <h2>공부 기록</h2>
-    <p id="studyDayCnt"></p>
-    <canvas id="totalHistory" style="height:30vh; width:50vw"></canvas>
-</div>
 </body>
 </html>
 
